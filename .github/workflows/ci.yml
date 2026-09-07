@@ -1,0 +1,25 @@
+name: CI
+
+on:
+   push:
+          branches:[ main, master ]
+   pull_request: 
+          branches:[ main, master ]
+
+
+jobs:
+    build: 
+         runs-on: ubuntu-latest
+         steps:
+            - uses: actions/checkout@v4
+
+            - name: install dependecies
+              run:  | 
+                sudo apt-get update
+                sudo apt-get install -y libeigen3-dev libfmt-dev
+
+            -name: Configure 
+              run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+            -name: Build 
+              run: cmake --build build
